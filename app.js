@@ -14,8 +14,7 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:3000', 
   'http://localhost:4000', 
-  'https://lifeist.netlify.app/',
-  "https://project-course-backend-lx3i.onrender.com"
+  "https://lifeist-my.netlify.app"
 ];
 
 app.use(cors({
