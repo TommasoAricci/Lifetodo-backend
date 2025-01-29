@@ -2,10 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const path = require('path');
-const todoRoutes = require('./routes/todoRoute');
-const thoughtRoutes = require('./routes/thoughtRoute');
-const userRoutes = require('./routes/userRoute');
-const songRoutes = require('./routes/songRoute');
+const todoRoutes = require('./src/routes/todoRoute');
+const thoughtRoutes = require('./src/routes/thoughtRoute');
+const userRoutes = require('./src/routes/userRoute');
+const songRoutes = require('./src/routes/songRoute');
 
 app.use(express.json());
 
