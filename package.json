@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node app.js",
-    "build": "node build"
+    "build": "echo \"Build step is not required for pure Node.js projects\""
   },
   "browserslist": {
     "production": [
