@@ -3,10 +3,10 @@ const Todo = require("../schemas/todo");
 exports.createTodos = async (req, res) => {
   try {
     const { title, items } = req.body;
-    const userId = req.user.userId; // Ottieni l'ID dell'utente autenticato
+    const userId = req.user.userId;
 
     const newTodo = new Todo({
-      user: userId, // Associa il todo all'utente
+      user: userId,
       title,
       items,
     });
@@ -22,7 +22,7 @@ exports.createTodos = async (req, res) => {
 exports.getTodos = async (req, res) => {
   try {
     const todos = await Todo.find()
-      .populate("user", "fullName username") // Popola il campo user con solo fullName e username
+      .populate("user", "fullName username")
       .exec();
 
     res.status(200).json(todos);

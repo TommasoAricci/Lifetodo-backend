@@ -32,11 +32,10 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ success: false, message: "Invalid credentials" });
     }
 
-    // Genera il token JWT
     const token = jwt.sign(
-      { userId: existingUser._id, username: existingUser.username }, // Payload
-      "MySecretPassw0rd!", // Il segreto per firmare il token
-      { expiresIn: "1h" } // Opzionale, per scadenza (1 ora in questo esempio)
+      { userId: existingUser._id, username: existingUser.username },
+      "MySecretPassw0rd!",
+      { expiresIn: "1h" }
     );
 
     res.status(200).json({
