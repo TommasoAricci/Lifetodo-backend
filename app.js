@@ -7,6 +7,7 @@ const thoughtRoutes = require('./src/routes/thoughtRoute');
 const userRoutes = require('./src/routes/userRoute');
 const songRoutes = require('./src/routes/songRoute');
 const bookRoutes = require('./src/routes/bookRoute');
+const movieRoutes = require('./src/routes/movieRoute');
 const PORT = process.env.PORT || 4000;
 const connectDB = require('./database');
 
@@ -28,7 +29,7 @@ app.use(cors({
 
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-app.use("/api", todoRoutes, thoughtRoutes, userRoutes, songRoutes, bookRoutes);
+app.use("/api", todoRoutes, thoughtRoutes, userRoutes, songRoutes, bookRoutes, movieRoutes);
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
