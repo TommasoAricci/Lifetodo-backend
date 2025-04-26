@@ -25,7 +25,7 @@ exports.getMovies = async (req, res) => {
     const movies = await Movie.find()
       .populate("user", "fullName username")
       .exec();
-    res.status(200).json(movies); // <-- Corretto
+    res.status(200).json(movies);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
