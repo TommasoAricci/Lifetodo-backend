@@ -7,12 +7,16 @@ exports.registerUser = async (req, res) => {
     const { fullName, username, password } = req.body;
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).json({ success: false, message: "Username already exists" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Username already exists" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ fullName, username, password: hashedPassword });
     await newUser.save();
-    res.status(201).json({ success: true, message: "User registered successfully" });
+    res
+      .status(201)
+      .json({ success: true, message: "User registered successfully" });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -24,12 +28,19 @@ exports.loginUser = async (req, res) => {
 
     const existingUser = await User.findOne({ username });
     if (!existingUser) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
     if (!isPasswordValid) {
-      return res.status(401).json({ success: false, message: "Invalid credentials" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid credentials" });
     }
 
     const token = jwt.sign(
@@ -63,7 +74,9 @@ exports.getCurrentUser = async (req, res) => {
 
     const user = await User.findById(userId); // Escludi il campo password
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
 
     res.status(200).json({ success: true, user });
@@ -81,7 +94,34 @@ exports.updateUser = async (req, res) => {
       { fullName, username },
       { new: true }
     );
-    res.status(200).json({ success: true, message: "User updated successfully", user: updatedUser });
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { username, newPassword } = req.body;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password reset successfully" });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
